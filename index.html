@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rasa Integration</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+    <h1>Rasa Integration Example</h1>
+
+    <form id="chatForm">
+        <label for="userInput">Type your message:</label>
+        <input type="text" id="userInput" name="userInput" required>
+        <button type="submit">Send</button>
+    </form>
+
+    <div id="botResponse"></div>
+
+    <script>
+        $(document).ready(function () {
+            $("#chatForm").submit(function (event) {
+                event.preventDefault();
+
+                var userMessage = $("#userInput").val();
+
+                // Send user message to Rasa server
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:5005/webhooks/rest/webhook",
+                    contentType: "application/json",
+                    data: JSON.stringify({ "message": userMessage }),
+                    success: function (response) {
+                        displayBotResponse(response);
+                    },
+                    error: function () {
+                        $("#botResponse").text("Error communicating with Rasa.");
+                    }
+                });
+            });
+
+            function displayBotResponse(response) {
+                var botResponse = response && response.length > 0 ? response[0].text : "No response from the bot.";
+                $("#botResponse").text("Bot: " + botResponse);
+            }
+        });
+    </script>
+
+</body>
+</html>
