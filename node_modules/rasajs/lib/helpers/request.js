@@ -1,0 +1,117 @@
+import XMLHttpRequest from 'xhr2';
+const request = {};
+/**
+ * 
+ * @param {string} URL - requested url
+ * @param {string} message - send data
+ */
+request.post = async(URL, message) => {
+    return await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', URL);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            resolve(xhr.response);
+          }
+          else if(xhr.status===204){
+            xhr.response=JSON.stringify([{"No Content":'204'}]);
+            resolve(xhr.response);
+          }
+          else {
+            reject(new Error(xhr.statusText));
+          }
+        };
+        xhr.onerror = () => {
+        reject(new Error('Network Error'));
+        };
+        xhr.send(JSON.stringify(message));
+    });
+};
+/**
+ * 
+ * @param {string} URL - requested url
+ */
+request.get = (URL) => {
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', URL);
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            resolve(xhr.response);
+          }
+          else if(xhr.status===204){
+            let val=xhr.statusText;
+            xhr.response=JSON.stringify([{"No Content":'204'}]);
+            resolve(xhr.response);
+          }
+          else {
+            reject(new Error(xhr.statusText));
+          }
+        };
+        xhr.onerror = () => {
+          reject(new Error('Network Error'));
+        };
+        xhr.send();
+      });
+};
+/**
+ * 
+ * @param {string} URL - requested url
+ * @param {string} message - send data
+ */
+request.put = (URL, message) => {
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('PUT', URL);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            resolve(xhr.response);
+          }
+          else if(xhr.status===204){
+            xhr.response=JSON.stringify([{"No Content":'204'}]);
+            resolve(xhr.response);
+          }
+          else {
+            reject(new Error(xhr.statusText));
+          }
+        };
+        xhr.onerror = () => {
+          reject(new Error('Network Error'));
+        };
+        xhr.send(JSON.stringify(message));
+      });
+};
+/**
+ * 
+ * @param {string} URL - requested url
+ * @param {string} callback - get response
+ */
+request.delete = (URL) => {
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('DELETE', URL);
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            resolve(xhr.response);
+          }
+          else if(xhr.status===204){
+            let val=xhr.statusText;
+            xhr.response=JSON.stringify([{"No Content":'204'}]);
+            resolve(xhr.response);
+          }
+          else {
+            reject(new Error(xhr.statusText));
+          }
+        };
+        xhr.onerror = () => {
+          reject(new Error('Network Error'));
+        };
+        xhr.send();
+      });
+};
+export {
+    request as default
+
+}

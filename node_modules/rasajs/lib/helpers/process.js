@@ -1,0 +1,67 @@
+import request from './request.js';
+const response = {};
+/**
+ * 
+ * @param {string} URL - URL to request for response
+ * @param {function} Callback - get response from server
+ */
+response.get = (URL, Callback) => {
+    request.get(URL)
+        .then(response => {
+            Callback(response);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+/**
+ * 
+ * @param {string} URL - URL to request for response
+ * @param {string} data - send data to server
+ * @param {function} Callback - get response from server
+ */
+response.post = (URL, data, Callback) => {
+    request.post(URL, data)
+        .then(response => {
+            Callback(JSON.parse(response));
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+/**
+ * 
+ * @param {string} URL - URL to request for response
+ * @param {string} data - send data to server
+ * @param {function} Callback - get response from server
+ */
+response.put = (URL, message, Callback) => {
+    request.put(URL, message)
+        .then(response => {
+            Callback(JSON.parse(response));
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+/**
+ * 
+ * @param {string} URL - URL to request for response
+ * @param {function} Callback - get response from server
+ */
+response.delete = (URL, Callback) => {
+    request.delete(URL)
+        .then(response => {
+            Callback(response);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
+
+
+export { response as default
+ }
+
+
